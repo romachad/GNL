@@ -6,7 +6,7 @@
 /*   By: romachad <romachad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 21:34:42 by romachad          #+#    #+#             */
-/*   Updated: 2022/07/12 01:51:53 by romachad         ###   ########.fr       */
+/*   Updated: 2022/07/18 04:15:05 by romachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,11 @@ char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *s);
-void	ft_bzero(void *s, size_t n);
-void	*ft_calloc(size_t nmemb, size_t size);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin_n(char *s1, char const *s2, size_t size);
-char	*ft_strjoin2(char *s1, char const *s2);
-size_t	ft_strlcat(char *dest, const char *src, size_t size);
 char	*ft_strdup(const char *src);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
+//char	*ft_strjoin2(char *s1, char const *s2);
+//void	ft_bzero(void *s, size_t n);
+//char	*ft_strjoin_n(char *s1, char const *s2, size_t size);
+//size_t	ft_strlcat(char *dest, const char *src, size_t size);

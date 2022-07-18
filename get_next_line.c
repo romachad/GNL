@@ -6,23 +6,50 @@
 /*   By: romachad <romachad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 21:40:34 by romachad          #+#    #+#             */
-/*   Updated: 2022/07/12 05:55:05 by romachad         ###   ########.fr       */
+/*   Updated: 2022/07/18 04:11:39 by romachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
 
+char	*ft_strjoin2(char *s1, char const *s2)
+{
+	size_t	size_s1;
+	size_t	size_s2;
+	size_t	i;
+	char	*joined;
 
-//#include <stdio.h>
-char	*read_line(int fd, char *buff_read)
+	if (!s1 && !s2)
+		return (NULL);
+	size_s1 = ft_strlen(s1);
+	size_s2 = ft_strlen(s2);
+	joined = malloc((size_s1 + size_s2 + 1) * sizeof(char));
+	if (!joined)
+		return (0);
+	i = 0;
+	while (i < (size_s1 + size_s2 + 1))
+	{
+		if (i < size_s1)
+			joined[i] = s1[i];
+		else
+			joined[i] = s2[i - size_s1];
+		i++;
+	}
+	free (s1);
+	return (joined);
+}
+
+static char	*read_line(int fd, char *buff_read)
 {
 	ssize_t	bytes;
 	char	*str;
 
-	str = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	//str = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	//str = calloc((BUFFER_SIZE + 1), sizeof(char));
+	str = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	bytes = BUFFER_SIZE;
-	while (!(ft_strchr(str, '\n')) && bytes > 0)
+	while (!(ft_strchr(buff_read, '\n')) && bytes > 0)
 	{
 		bytes = read(fd, str, BUFFER_SIZE);
 		if (bytes < 0)
@@ -40,7 +67,7 @@ char	*read_line(int fd, char *buff_read)
 	return (buff_read);
 }
 
-char	*adjust_line(char *buff_read)
+static char	*adjust_line(char *buff_read)
 {
 	size_t	i;
 	char	*line;
@@ -66,7 +93,7 @@ char	*adjust_line(char *buff_read)
 	return (line);
 }
 
-char	*adjust_buffer(char *buff_read)
+static char	*adjust_buffer(char *buff_read)
 {
 	size_t	i;
 	size_t	sizeb;
@@ -75,7 +102,7 @@ char	*adjust_buffer(char *buff_read)
 	i = 0;
 	while (buff_read[i] && buff_read[i] != '\n')
 		i++;
-	if (buff_read[i] == '\n' && buff_read[i + 1])
+	if (buff_read[i] == '\n')
 		i++;
 	sizeb = ft_strlen(buff_read);
 	if (sizeb - i > 0)
@@ -96,7 +123,7 @@ char	*adjust_buffer(char *buff_read)
 char	*get_next_line(int fd)
 {
 	static char	*buff_read;
-	char	*line;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
