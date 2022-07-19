@@ -6,7 +6,7 @@
 /*   By: romachad <romachad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 21:40:34 by romachad          #+#    #+#             */
-/*   Updated: 2022/07/18 04:11:39 by romachad         ###   ########.fr       */
+/*   Updated: 2022/07/20 01:52:32 by romachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -43,8 +43,6 @@ static char	*read_line(int fd, char *buff_read)
 	ssize_t	bytes;
 	char	*str;
 
-	//str = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	//str = calloc((BUFFER_SIZE + 1), sizeof(char));
 	str = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
@@ -76,15 +74,9 @@ static char	*adjust_line(char *buff_read)
 	while (buff_read[i] && buff_read[i] != '\n')
 		i++;
 	if (buff_read[i] && buff_read[i] == '\n' && buff_read[i + 1])
-	{
-		if (buff_read[i] == '\n')
-			i++;
-		line = ft_substr(buff_read, 0, i);
-	}
+		line = ft_substr(buff_read, 0, i + 1);
 	else
-	{
 		line = ft_strdup(buff_read);
-	}
 	if (!line)
 	{
 		free (line);
