@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romachad <romachad@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 21:40:34 by romachad          #+#    #+#             */
-/*   Updated: 2022/07/21 01:49:19 by romachad         ###   ########.fr       */
+/*   Updated: 2022/07/21 01:25:17 by romachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_strjoin2(char *s1, char const *s2)
 {
@@ -114,16 +114,16 @@ static char	*adjust_buffer(char *buff_read)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff_read;
+	static char	*buff_read[OPEN_MAX];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1 || fd > OPEN_MAX)
 		return (NULL);
-	buff_read = read_line(fd, buff_read);
-	if (buff_read)
+	buff_read[fd] = read_line(fd, buff_read[fd]);
+	if (buff_read[fd])
 	{
-		line = adjust_line(buff_read);
-		buff_read = adjust_buffer(buff_read);
+		line = adjust_line(buff_read[fd]);
+		buff_read[fd] = adjust_buffer(buff_read[fd]);
 		return (line);
 	}
 	else
